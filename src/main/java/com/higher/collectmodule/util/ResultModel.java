@@ -1,8 +1,11 @@
-package com.higher.scancodescollect.util;
+package com.higher.collectmodule.util;
 
 import lombok.Data;
 
 @Data
+/**
+ * 封装返回数据结果
+ */
 public class ResultModel<T> {
     private Integer code;
     private T data;

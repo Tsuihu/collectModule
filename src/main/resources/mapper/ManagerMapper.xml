@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.higher.scancodescollect.dao.ManagerDao">
-    <select id="getManagerByTel" resultType="com.higher.scancodescollect.pojo.Manager">
+<mapper namespace="com.higher.collectmodule.dao.ManagerDao">
+    <!--  登录：通过电话查询用户信息  -->
+    <select id="getManagerByTel" resultType="com.higher.collectmodule.pojo.Manager">
         select *
         from manager
         where tel = #{tel};
+    </select>
+    <!--  注册  -->
+    <insert id="addManager">
+        insert into manager(name,idcard,tel,password,registeTime)
+        values(#{name},#{idcard},#{tel},#{password},#{registeTime})
+    </insert>
+    <!--  检查电话是否存在  -->
+    <select id="checkManagerRepeat" resultType="int">
+        select count(0) from manager where tel = #{tel}
     </select>
 </mapper>

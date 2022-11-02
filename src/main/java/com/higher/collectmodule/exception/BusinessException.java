@@ -1,6 +1,6 @@
-package com.higher.scancodescollect.exception;
+package com.higher.collectmodule.exception;
 
-import com.higher.scancodescollect.util.ResultCodeEnum;
+import com.higher.collectmodule.util.ResultCodeEnum;
 import lombok.Data;
 
 @Data

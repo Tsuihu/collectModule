@@ -1,7 +1,7 @@
-package com.higher.scancodescollect.util;
+package com.higher.collectmodule.util;
 
 /**
- * 封装返回数据
+ * 封装返回数据状态码
  */
 public enum ResultCodeEnum {
     SUCCESS(0),ERROR(100),LOGIN_ERROR(101);

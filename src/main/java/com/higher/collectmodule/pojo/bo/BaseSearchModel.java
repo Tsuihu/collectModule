@@ -1,4 +1,4 @@
-package com.higher.scancodescollect.pojo.bo;
+package com.higher.collectmodule.pojo.bo;
 
 import lombok.Data;
 

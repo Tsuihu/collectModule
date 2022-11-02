@@ -1,7 +1,7 @@
-package com.higher.scancodescollect.exception;
+package com.higher.collectmodule.exception;
 
-import com.higher.scancodescollect.util.ResultCodeEnum;
-import com.higher.scancodescollect.util.ResultModel;
+import com.higher.collectmodule.util.ResultCodeEnum;
+import com.higher.collectmodule.util.ResultModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @ControllerAdvice
-
+// 全局异常处理
 public class GolbalException {
 
     @ExceptionHandler(value = Exception.class)

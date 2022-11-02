@@ -1,10 +1,10 @@
-package com.higher.scancodescollect;
+package com.higher.collectmodule;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ScanCodesCollectApplicationTests {
+class CollectModualApplictionTests {
 
     @Test
     void contextLoads() {
