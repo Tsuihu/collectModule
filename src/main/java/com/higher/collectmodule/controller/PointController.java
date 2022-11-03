@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -37,9 +38,9 @@ public class PointController {
      * @throws BusinessException
      */
     @PostMapping("/getIdByName.do")
-    ResultModel<Point> getIdByName(@RequestBody Point point) throws BusinessException {
+    void getIdByName(HttpServletRequest request, @RequestBody Point point) throws BusinessException {
         Point point1 = pointService.getIdByName(point.getPointName());
-        return  new ResultModel<>(ResultCodeEnum.SUCCESS, point1, "");
+        request.getSession().setAttribute("pointId",point1.getPointId());
     }
 
     /**
