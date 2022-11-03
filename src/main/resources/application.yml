@@ -3,8 +3,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/covid?serverTimezone=UTC
     username: root
-    password: xct19991101
+    password: 123456
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 #  type-aliases-package: com.honzh.demo-module.pojo
-  type-aliases-package: com.higher.scancodescollect.pojo
+  type-aliases-package: com.higher.collectmodule.pojo

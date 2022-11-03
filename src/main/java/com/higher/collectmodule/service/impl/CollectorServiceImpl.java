@@ -21,7 +21,7 @@ public class CollectorServiceImpl implements CollectorService {
      * @throws BusinessException
      */
     @Override
-    public Collector login(long tel, String password) throws BusinessException{
+    public Collector login(String tel, String password) throws BusinessException{
         Collector login = collectorDao.login(tel);
 
         if(login == null){
