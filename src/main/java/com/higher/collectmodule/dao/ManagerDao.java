@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public interface ManagerDao {
     // 登录
-    public Manager getManagerByTel(String tel);
+    public Manager getManagerByTel(Long tel);
     // 注册
     public void addManager(Manager manager);
     // 检查手机号是否存在
-    int checkManagerRepeat(String tel);
+    int checkManagerRepeat(Long tel);
 }

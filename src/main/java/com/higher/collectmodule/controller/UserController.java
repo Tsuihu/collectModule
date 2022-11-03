@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 @RestController
 public class UserController {
     @Autowired
@@ -36,6 +38,7 @@ public class UserController {
      */
     @PostMapping("registe.do")
     public ResultModel<Manager> registe(@RequestBody Manager manager) throws BusinessException {
+        manager.setRegisteTime(new Date());
         managerService.addManager(manager);
         return new ResultModel<>(ResultCodeEnum.SUCCESS,manager,"");
     }

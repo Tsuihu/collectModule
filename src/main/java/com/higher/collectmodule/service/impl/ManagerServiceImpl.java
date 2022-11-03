@@ -22,7 +22,7 @@ public class ManagerServiceImpl implements ManagerService {
      * @throws BusinessException
      */
     @Override
-    public Manager login(String tel, String password) throws BusinessException {
+    public Manager login(Long tel, String password) throws BusinessException {
         Manager manager = managerDao.getManagerByTel(tel);
         if(manager == null){
             throw new BusinessException("手机号不存在", ResultCodeEnum.LOGIN_ERROR);

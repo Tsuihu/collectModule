@@ -12,8 +12,16 @@ import org.springframework.stereotype.Service;
 public class CollectorServiceImpl implements CollectorService {
     @Autowired
     CollectorDao collectorDao;
+
+    /**
+     * 登录
+     * @param tel
+     * @param password
+     * @return
+     * @throws BusinessException
+     */
     @Override
-    public Collector login(String tel, String password) throws BusinessException{
+    public Collector login(long tel, String password) throws BusinessException{
         Collector login = collectorDao.login(tel);
 
         if(login == null){
@@ -23,5 +31,20 @@ public class CollectorServiceImpl implements CollectorService {
             return login;
         }
         throw new BusinessException("密码错误",ResultCodeEnum.LOGIN_ERROR);
+    }
+
+    /**
+     * 注册
+     * @param collector
+     * @throws BusinessException
+     */
+    @Override
+    public void addManager(Collector collector) throws BusinessException {
+        if (collectorDao.checkCollectorRepeat(collector.getTel())>0){
+            throw new BusinessException("手机号已存在",ResultCodeEnum.ERROR);
+        }
+        else {
+            collectorDao.addManager(collector);
+        }
     }
 }
