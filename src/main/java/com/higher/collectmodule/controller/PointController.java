@@ -34,7 +34,7 @@ public class PointController {
     /**
      * 单查返回信息id
      * @param point
-     * @return
+     * @return2
      * @throws BusinessException
      */
     @PostMapping("/getIdByName.do")
