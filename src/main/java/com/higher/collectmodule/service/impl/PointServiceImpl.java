@@ -31,20 +31,16 @@ public class PointServiceImpl implements PointService {
      */
     @Override
     public Point getIdByName(String pointName) throws BusinessException {
-        if (pointDao.nameCount(pointName)==0){
-            throw new BusinessException("地点信息不存在", ResultCodeEnum.POINT_ERROR);
-        }else {
-            Point idByName = pointDao.getIdByName(pointName);
-            return idByName;
-        }
+            Point pointId = pointDao.getIdByName(pointName);
+            return pointId;
     }
     /**
      * 模糊查询
      * @return
      */
     @Override
-    public List<String> getLikeName(String pointName) {
-        List<String> points = pointDao.getLikeName(pointName);
+    public List<Point> getLikeName(String pointName) {
+        List<Point> points = pointDao.getLikeName(pointName);
         return points;
     }
 }

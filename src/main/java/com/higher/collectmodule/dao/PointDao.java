@@ -21,12 +21,11 @@ public interface PointDao {
      * @return
      */
     Point getIdByName(@Param("pointName")String pointName);
-    int nameCount(@Param("pointName")String pointName);
 
     /**
      * 模糊查询
      * @param pointName
      * @return
      */
-    List<String> getLikeName(@Param("pointName")String pointName);
+    List<Point> getLikeName(@Param("pointName")String pointName);
 }

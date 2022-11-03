@@ -4,26 +4,22 @@
 <mapper namespace="com.higher.collectmodule.dao.PointDao">
 <!--获取所有地点信息-->
     <select id="getAllPoint" resultType="com.higher.collectmodule.pojo.Point">
-        select *
+        select pointId,pointName
         from point;
     </select>
+
 <!--   通过地点名字获取地点ID，查询时包括地点名字 -->
     <select id="getIdByName" resultType="com.higher.collectmodule.pojo.Point">
-        select *
+        select pointId
         from point
         where pointName=#{pointName};
     </select>
 
-    <select id="nameCount" resultType="int">
-        select count(0)
-        from point
-        where pointName=#{pointName};
-    </select>
 
 <!--    通过地点名字进行模糊查询-->
-    <select id="getLikeName" resultType="string">
-        select pointName
+    <select id="getLikeName" resultType="com.higher.collectmodule.pojo.Point">
+        select pointId,pointName
         from point
-        where pointName like "%"#{pointName}"%"
+        where pointName like concat('%',#{pointName},'%')
     </select>
 </mapper>

@@ -7,6 +7,7 @@ import com.higher.collectmodule.util.ResultCodeEnum;
 import com.higher.collectmodule.util.ResultModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,8 +50,8 @@ public class PointController {
      * @throws BusinessException
      */
     @PostMapping("/getLikeName.do")
-    List<String> getLikeName(@RequestBody Point point) throws BusinessException {
-        List<String> name= pointService.getLikeName(point.getPointName());
-        return name;
+    ResultModel<List<Point>> getLikeName(@RequestBody Point point) throws BusinessException {
+        List<Point> name= pointService.getLikeName(point.getPointName());
+        return new ResultModel<>(ResultCodeEnum.SUCCESS,name,"");
     }
 }
