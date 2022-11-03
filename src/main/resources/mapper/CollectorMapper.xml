@@ -10,8 +10,8 @@
 
 <!--    注册-->
     <insert id="addManager">
-        insert into collector (name,tel,password,createTime)
-        values (#{name},#{tel},#{password},#{createTime});
+        insert into collector (name,tel,password,registTime,idcard,organizationId)
+        values (#{name},#{tel},#{password},#{registTime},#{idcard},#{organizationId});
     </insert>
     <select id="checkCollectorRepeat" resultType="java.lang.Integer">
         select count(0) from collector where tel = #{tel}

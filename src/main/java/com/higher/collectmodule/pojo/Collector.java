@@ -15,19 +15,24 @@ public class Collector {
     private String name;
     private Long tel;
     private String password;
+    private String idcard;
+    private String organizationId;
+
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd" ,timezone = "GMT+8")
-    private Date createTime;
+    private Date registTime;
 
     @Override
     public String toString() {
-        return "collector{" +
+        return "Collector{" +
                 "collectorId=" + collectorId +
                 ", name='" + name + '\'' +
                 ", tel=" + tel +
                 ", password='" + password + '\'' +
-                ", createTime=" + createTime +
+                ", idcard='" + idcard + '\'' +
+                ", organizationId='" + organizationId + '\'' +
+                ", registTime=" + registTime +
                 '}';
     }
 }

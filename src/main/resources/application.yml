@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/nucleic_acid?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/covid?serverTimezone=UTC
     username: root
     password: xct19991101
 mybatis:

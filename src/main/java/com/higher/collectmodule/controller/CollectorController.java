@@ -40,7 +40,8 @@ public class CollectorController {
      */
     @PostMapping("registe.do")
     ResultModel<Collector> registe(@RequestBody Collector collector) throws BusinessException {
-        collector.setCreateTime(new Date());
+        collector.setRegistTime(new Date());
+        collector.setOrganizationId("1000");
         collectorService.addManager(collector);
         return new ResultModel<>(ResultCodeEnum.SUCCESS,collector,"");
     }
