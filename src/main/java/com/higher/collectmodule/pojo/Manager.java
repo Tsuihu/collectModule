@@ -8,16 +8,16 @@ import java.util.Date;
 
 
 @Data
-// 后台管理人员实体类
+// 运营管理人员表
 public class Manager {
     private Integer managerId;
-    private String name;
-    private Long idcard;
-    private Long tel;
-    private String password;
+    private String name;  //管理员姓名
+    private String idcard; //身份证号，可用于找回密码
+    private String tel;   //电话，可用于登录
+    private String password; //密码
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date registeTime;
+    private Date registTime; //注册时间
 
 
     @Override
@@ -25,10 +25,10 @@ public class Manager {
         return "Manager{" +
                 "managerId=" + managerId +
                 ", name='" + name + '\'' +
-                ", idcard=" + idcard +
-                ", tel=" + tel +
+                ", idcard='" + idcard + '\'' +
+                ", tel='" + tel + '\'' +
                 ", password='" + password + '\'' +
-                ", registeTime=" + registeTime +
+                ", registeTime=" + registTime +
                 '}';
     }
 }
