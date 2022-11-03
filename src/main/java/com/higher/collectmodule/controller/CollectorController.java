@@ -2,6 +2,7 @@ package com.higher.collectmodule.controller;
 
 import com.higher.collectmodule.exception.BusinessException;
 import com.higher.collectmodule.pojo.Collector;
+import com.higher.collectmodule.pojo.Point;
 import com.higher.collectmodule.service.CollectorService;
 import com.higher.collectmodule.util.ResultCodeEnum;
 import com.higher.collectmodule.util.ResultModel;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @RestController
@@ -41,8 +44,9 @@ public class CollectorController {
     @PostMapping("registe.do")
     ResultModel<Collector> registe(@RequestBody Collector collector) throws BusinessException {
         collector.setRegistTime(new Date());
-        collector.setOrganizationId("1000");
+        collector.setOrganizationId(1000);
         collectorService.addManager(collector);
         return new ResultModel<>(ResultCodeEnum.SUCCESS,collector,"");
     }
+
 }

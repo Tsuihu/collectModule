@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public interface CollectorService {
     //登录
-    Collector login(long tel, String password) throws BusinessException;
+    Collector login(String tel, String password) throws BusinessException;
 
     //注册
     void addManager(Collector collector)throws BusinessException;

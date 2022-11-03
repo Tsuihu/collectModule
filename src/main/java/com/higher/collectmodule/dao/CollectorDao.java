@@ -11,10 +11,10 @@ import javax.management.StandardEmitterMBean;
 public interface CollectorDao {
   //登录
 
-  Collector login(long tel);
+  Collector login(String tel);
 
   // 注册
   void addManager(Collector collector);
   // 检查手机号是否存在
-  int checkCollectorRepeat(long tel);
+  int checkCollectorRepeat(String tel);
 }

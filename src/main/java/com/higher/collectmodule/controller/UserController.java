@@ -38,7 +38,7 @@ public class UserController {
      */
     @PostMapping("registe.do")
     public ResultModel<Manager> registe(@RequestBody Manager manager) throws BusinessException {
-        manager.setRegisteTime(new Date());
+        manager.setRegistTime(new Date());
         managerService.addManager(manager);
         return new ResultModel<>(ResultCodeEnum.SUCCESS,manager,"");
     }
