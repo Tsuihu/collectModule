@@ -7,7 +7,7 @@ import java.util.List;
 
 @Component
 public interface BoxDao {
-    List<Box> getAllBox();
+    List<Box> getAllBox(Integer pointId);
 
     void addBox(Box box);
 

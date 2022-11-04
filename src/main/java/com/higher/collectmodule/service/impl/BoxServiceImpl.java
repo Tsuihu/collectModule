@@ -14,8 +14,8 @@ public class BoxServiceImpl implements BoxService {
     @Autowired
     BoxDao boxDao;
     @Override
-    public List<Box> getAllBox() {
-        List<Box> allBox = boxDao.getAllBox();
+    public List<Box> getAllBox(Integer pointId) {
+        List<Box> allBox = boxDao.getAllBox(pointId);
         return allBox;
     }
 
