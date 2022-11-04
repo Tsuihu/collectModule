@@ -19,6 +19,12 @@
         from testtube
         where testtubeCode=#{testtubeCode}
     </select>
+<!--    判断箱子状态是否为封箱状态-->
+    <select id="getBoxStatus" resultType="string">
+        select status
+        from box
+        where boxId=#{boxId}
+    </select>
 <!--封管-->
     <update id="closeTube">
         update testtube set status=#{status},closeTime=#{closeTime} where testtubeId=#{testtubeId}

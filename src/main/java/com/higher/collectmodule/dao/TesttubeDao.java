@@ -15,6 +15,8 @@ public interface TesttubeDao {
     void addTube(Testtube testtube);
 //    判断编号是否重复
     int getOne(@Param("testtubeCode") String testtubeCode);
+//    判断箱子状态
+    String getBoxStatus(@Param("boxId")String boxId);
 //    封管,传递参数是开管时的testtubeId,
     void closeTube(@Param("status")Integer status, @Param("closeTime")Date closeTime,@Param("testtubeId")Integer testtubeId);
 }

@@ -29,8 +29,12 @@ public class TesttubeServiceImpl implements TesttubeService {
      */
     @Override
     public void addTube(Testtube testtube) throws BusinessException {
+//        进行判断，查看箱子状态是否封箱，若封箱则不能继续添加试管
+        if (testtubeDao.getBoxStatus(testtube.getBoxId().toString()).equals("1")){
+            throw new BusinessException("此箱已封箱，不能继续添加试管", ResultCodeEnum.LOGIN_ERROR);
+        }
 //        进行判断,看看试管编码是否重复
-        if (testtubeDao.getOne(testtube.getTesttubeCode())>0){
+        else if (testtubeDao.getOne(testtube.getTesttubeCode())>0){
             throw new BusinessException("编号已存在", ResultCodeEnum.LOGIN_ERROR);
         }
         testtubeDao.addTube(testtube);
