@@ -50,8 +50,9 @@ public class PointController {
      * @throws BusinessException
      */
     @PostMapping("/getLikeName.do")
-    ResultModel<List<Point>> getLikeName(@RequestBody Point point) throws BusinessException {
+    ResultModel<List<Point>> getLikeName(HttpServletRequest request,@RequestBody Point point) throws BusinessException {
         List<Point> name= pointService.getLikeName(point.getPointName());
+        request.getSession().setAttribute("pointId",point.getPointId());
         return new ResultModel<>(ResultCodeEnum.SUCCESS,name,"");
     }
 }

@@ -3,14 +3,30 @@
 
 <mapper namespace="com.higher.collectmodule.dao.BoxDao">
 
-    <insert id="addBox">
+<!--    开箱语句-->
+    <insert id="addBox" useGeneratedKeys="true" keyProperty="boxId">
         insert into box (boxCode,status,collectorId,transferId,testerId,pointId,testOrganiationId,openTime)
         values (#{boxCode},#{status},#{collectorId},#{transferId},#{testerId},#{pointId},#{testOrganiationId},#{openTime});
 
     </insert>
+
+<!--    封箱操作-->
+    <update id="closeBox" useGeneratedKeys="true" keyProperty="boxId">
+        update box
+        set status = #{status}
+        where boxId=#{boxId};
+    </update>
+
+<!--    查询所有箱子-->
     <select id="getAllBox" resultType="com.higher.collectmodule.pojo.Box">
-        select *
+        select boxCode,status
         from box where pointId=#{pointId};
+    </select>
+
+<!--    查询箱子的单个信息，仅用于后端-->
+    <select id="getBoxCode" resultType="com.higher.collectmodule.pojo.Box">
+        select *
+        from box where boxCode=#{boxCode};
     </select>
 
 
