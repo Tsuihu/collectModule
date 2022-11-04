@@ -4,7 +4,7 @@
 <mapper namespace="com.higher.collectmodule.dao.TesttubeDao">
 <!--    查询全部管的信息，包含管编号和状态,需要参数boxId-->
     <select id="getAllTube" resultType="com.higher.collectmodule.pojo.Testtube">
-        select testtubeCode , status
+        select *
         from testtube
         where boxId=#{boxId}
     </select>
