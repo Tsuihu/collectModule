@@ -19,7 +19,7 @@
 
 <!--    查询所有箱子-->
     <select id="getAllBox" resultType="com.higher.collectmodule.pojo.Box">
-        select boxCode,status
+        select *
         from box where pointId=#{pointId};
     </select>
 

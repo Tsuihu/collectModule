@@ -8,10 +8,9 @@ import com.higher.collectmodule.util.ResultModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class BoxController {
      * @throws BusinessException
      */
     @PostMapping("addBox.do")
-    ResultModel<Box> addBox(Box box) throws BusinessException {
+    ResultModel<Box> addBox(@RequestBody Box box) throws BusinessException {
         if (StringUtils.isEmpty(box.getBoxCode())){
             throw new BusinessException("请输入正确编码",ResultCodeEnum.ERROR);
         }
@@ -64,7 +63,7 @@ public class BoxController {
      * @return
      */
     @PostMapping("closeBox.do")
-    ResultModel<Box> closeBox(Box box){
+    ResultModel<Box> closeBox(@RequestBody Box box){
 //        box.setBoxId((Integer) request.getSession().getAttribute("boxId"));
         box.setCloseTime(new Date());
         box.setStatus("1");
