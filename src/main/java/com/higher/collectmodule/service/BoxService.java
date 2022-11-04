@@ -8,4 +8,6 @@ import java.util.List;
 @Component
 public interface BoxService {
     List<Box> getAllBox();
+
+    void addBox(Box box);
 }

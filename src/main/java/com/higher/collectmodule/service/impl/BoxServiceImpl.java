@@ -18,4 +18,9 @@ public class BoxServiceImpl implements BoxService {
         List<Box> allBox = boxDao.getAllBox();
         return allBox;
     }
+
+    @Override
+    public void addBox(Box box) {
+        boxDao.addBox(box);
+    }
 }

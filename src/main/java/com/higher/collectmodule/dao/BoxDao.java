@@ -8,4 +8,7 @@ import java.util.List;
 @Component
 public interface BoxDao {
     List<Box> getAllBox();
+
+    void addBox(Box box);
+
 }

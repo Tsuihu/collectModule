@@ -32,7 +32,7 @@ public class CollectorController {
     @PostMapping("/login.do")
     ResultModel<Collector> login(@RequestBody Collector collector) throws BusinessException {
         Collector login = collectorService.login(collector.getTel(), collector.getPassword());
-        return  new ResultModel<>(ResultCodeEnum.SUCCESS, login, "");
+        return  new ResultModel<>(ResultCodeEnum.SUCCESS, login, "登录成功");
     }
 
     /**
@@ -46,7 +46,7 @@ public class CollectorController {
         collector.setRegistTime(new Date());
         collector.setOrganizationId(1000);
         collectorService.addManager(collector);
-        return new ResultModel<>(ResultCodeEnum.SUCCESS,collector,"");
+        return new ResultModel<>(ResultCodeEnum.SUCCESS,collector,"注册成功");
     }
 
 }
