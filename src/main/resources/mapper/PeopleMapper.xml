@@ -28,10 +28,10 @@
         from people where idcard = #{idcard};
     </select>
 
-<!--    <select id="getTypeByTubeId" resultType="java.lang.Integer">-->
-<!--        select collectType-->
-<!--        from testtube where testtubeId =#{testtubeId};-->
-<!--    </select>-->
+    <select id="getTypeByTubeId" resultType="java.lang.Integer">
+        select collectType
+        from testtube where testtubeId =#{testtubeId};
+    </select>
 
 
 </mapper>

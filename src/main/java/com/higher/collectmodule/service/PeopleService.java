@@ -2,10 +2,10 @@ package com.higher.collectmodule.service;
 
 import com.higher.collectmodule.exception.BusinessException;
 import com.higher.collectmodule.pojo.People;
-import com.higher.collectmodule.pojo.Testtube;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -16,7 +16,8 @@ public interface PeopleService {
     //添加人员信息
     void addPeople(People people) throws BusinessException;
 
-    void insertSample(Integer peopleId, Integer testtubeId);
+    void insertSample(Integer peopleId, Integer testtubeId, Date collectTime);
 
-//    Integer getTypeByTubeId(@Param("testtubeId") Integer testtubeId);
+    Integer getTypeByTubeId(@Param("testtubeId") Integer testtubeId);
+
 }

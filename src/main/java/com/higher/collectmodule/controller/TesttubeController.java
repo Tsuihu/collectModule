@@ -5,12 +5,14 @@ import com.higher.collectmodule.pojo.Testtube;
 import com.higher.collectmodule.service.TesttubeService;
 import com.higher.collectmodule.util.ResultCodeEnum;
 import com.higher.collectmodule.util.ResultModel;
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class TesttubeController {
      * @return
      */
     @PostMapping("/getAllTube.do")
-    public ResultModel<List<Testtube>> getAllTube(@RequestBody Testtube testtube){
+    public ResultModel<List<Testtube>> getAllTube(Testtube testtube){
         List<Testtube> testtubes= testtubeService.getAllTube(testtube.getBoxId());
 
         return new ResultModel<>(ResultCodeEnum.SUCCESS, testtubes, "");
@@ -38,11 +40,14 @@ public class TesttubeController {
      * @throws BusinessException
      */
     @PostMapping("/addTube.do")
-    public ResultModel<Testtube> addTube(@RequestBody Testtube testtube) throws BusinessException {
+    public ResultModel<Testtube> addTube(HttpServletRequest request, @RequestBody Testtube testtube) throws BusinessException {
         testtube.setStatus(0);
         testtube.setOpenTime(new Date());
         testtube.setTestResult("0");
         testtubeService.addTube(testtube);
+        request.getSession().setAttribute("tubeId",testtube.getTesttubeId());
+        request.getSession().setAttribute("tubeType",testtube.getCollectType());
+
         return new ResultModel<Testtube>(ResultCodeEnum.SUCCESS, testtube, "");
     }
 

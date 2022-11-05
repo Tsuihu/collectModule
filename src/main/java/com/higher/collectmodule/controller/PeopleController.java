@@ -1,5 +1,6 @@
 package com.higher.collectmodule.controller;
 
+import com.higher.collectmodule.dao.PeopleDao;
 import com.higher.collectmodule.exception.BusinessException;
 import com.higher.collectmodule.pojo.People;
 import com.higher.collectmodule.pojo.Sample;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +23,9 @@ import java.util.List;
 public class PeopleController {
     @Autowired
     PeopleService peopleService;
+
+    @Autowired
+    PeopleDao peopleDao;
 
     /**
      * 根据试管Id查询所有peopleId，再根据peopleID查询对应的人员信息
@@ -42,32 +47,63 @@ public class PeopleController {
      * @throws BusinessException
      */
     @PostMapping("addPeople.do")
-    ResultModel<People> addPeople(@RequestBody People people) throws BusinessException {
+    ResultModel<People> addPeople(HttpServletRequest request, @RequestBody People people) throws BusinessException {
         people.setCreateTime(new Date());
         peopleService.addPeople(people);
-        return new ResultModel<>(ResultCodeEnum.SUCCESS,people,"");
-    }
+        Integer peopleId = peopleDao.getpeopleByIdcard(people.getIdcard());
 
-    /**
-     * 根据人员信息添加sample表，
-     * @param people peopleId
-     * @param sample
-     * @param testtube  testtubeId,collectType.
-     * @return
-     */
-    @PostMapping("insertSample.do")
-    ResultModel<Sample> insertSample(People people,Sample sample,Testtube testtube){
-        Integer type = testtube.getCollectType();
-        List<People> peopleList = peopleService.getPeopleByTubeId(testtube.getTesttubeId());
+        request.getSession().setAttribute("peopleId",peopleId);
+
+
+        System.out.println(request.getSession().getAttribute("peopleId"));
+        System.out.println(request.getSession().getAttribute("tubeId"));
+        System.out.println(request.getSession().getAttribute("tubeType"));
+
+        Integer peopleId1 = (Integer) request.getSession().getAttribute("peopleId");
+        Integer tubeId = (Integer) request.getSession().getAttribute("tubeId");
+        Integer tubeType = (Integer) request.getSession().getAttribute("tubeType");
+
+
+        List<People> peopleList = peopleService.getPeopleByTubeId(tubeId);
         int size = peopleList.size();
-        if (size<type){
-            sample.setCollectTime(new Date());
-            peopleService.insertSample(people.getPeopleId(), testtube.getTesttubeId());
-            return new ResultModel<>(ResultCodeEnum.SUCCESS,sample,"添加成功");
+
+        System.out.println(size);
+
+        if (size<tubeType){
+            peopleService.insertSample(peopleId1,tubeId,new Date());
+            return  new ResultModel<>(ResultCodeEnum.SUCCESS, people, "添加成功");
         }
-       else {
-           return new ResultModel<>(ResultCodeEnum.ERROR,"试管已满，请封管后另开新管检测");
+        else {
+            return new ResultModel<>(ResultCodeEnum.ERROR,people,"试管已满，请封管后另开新管检测");
         }
+
+//        Integer peopleId = peopleDao.getpeopleByIdcard(people.getIdcard());
+//
+//
+//        Integer type = peopleService.getTypeByTubeId(1);
+//
+//        List<People> peopleList = peopleService.getPeopleByTubeId(1);
+//        int size = peopleList.size();
+//
+//        if (size<type){
+//            peopleService.insertSample(peopleId, 1,new Date());
+//            return  new ResultModel<>(ResultCodeEnum.SUCCESS, people, "添加成功");
+//        }else {
+//            return new ResultModel<>(ResultCodeEnum.ERROR,"试管已满，请封管后另开新管检测");
+//        }
+
+
+//        Integer type = testtube.getCollectType();
+//        List<People> peopleList = peopleService.getPeopleByTubeId(testtube.getTesttubeId());
+//        int size = peopleList.size();
+//        if (size < type) {
+//            sample.setCollectTime(new Date());
+//            peopleService.insertSample(people.getPeopleId(), testtube.getTesttubeId());
+//            return new ResultModel<>(ResultCodeEnum.SUCCESS, sample, "添加成功");
+//        }
+//        else {
+//            return new ResultModel<>(ResultCodeEnum.ERROR,"试管已满，请封管后另开新管检测");
+//        }
     }
 
 }

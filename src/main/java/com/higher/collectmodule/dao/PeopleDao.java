@@ -1,11 +1,10 @@
 package com.higher.collectmodule.dao;
 
 import com.higher.collectmodule.pojo.People;
-import com.higher.collectmodule.pojo.Sample;
-import com.higher.collectmodule.pojo.Testtube;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -19,10 +18,11 @@ public interface PeopleDao {
     void addPeople(People people);
 
     //根据身份证查peopleId,判断人员是都存在
-    Integer getpeopleByIdcard(String idcard);
+    Integer getpeopleByIdcard(@Param("idcard") String idcard);
 
 ////    根据testtubeId查询collectType，返回type数值。
-//    Integer getTypeByTubeId(@Param("testtubeId") Integer testtubeId);
+    Integer getTypeByTubeId(@Param("testtubeId") Integer testtubeId);
 
-    void insertSample(Integer peopleId, Integer testtubeId);
+
+    void insertSample(Integer peopleId, Integer testtubeId, Date collectTime);
 }
