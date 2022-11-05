@@ -16,13 +16,6 @@ public interface PointDao {
     List<Point> getAllPoint();
 
     /**
-     *
-     * 单查返回地点id
-     * @return
-     */
-    Point getIdByName(@Param("pointName")String pointName);
-
-    /**
      * 模糊查询
      * @param pointName
      * @return

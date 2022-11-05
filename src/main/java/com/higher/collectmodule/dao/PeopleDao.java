@@ -4,6 +4,8 @@ import com.higher.collectmodule.pojo.People;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 
 
@@ -19,8 +21,11 @@ public interface PeopleDao {
     //根据身份证查peopleId,判断人员是都存在
     Integer getpeopleByIdcard(@Param("idcard") String idcard);
 
+    //添加sample表
+    void insertSample(@Param("peopleId") Integer peopleId, @Param("testtubeId") Integer testtubeId ,@Param("collectTime") Date collectTime);
 
-    void insertSample(@Param("peopleId") Integer peopleId,@Param("testtubeId") Integer testtubeId);
-
+//    查询testtubeId的采集类型
     Integer getTypeByTubeId(@Param("testtubeId") Integer testtubeId);
+
+    String getstatusByTubeId(@Param("testtubeId") Integer testtubeId);
 }

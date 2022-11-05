@@ -11,8 +11,8 @@
 
 
     <insert id="insertSample">
-        insert into sample (peopleId,testtubeId)
-        values (#{peopleId},#{testtubeId});
+        insert into sample (peopleId,testtubeId,collectTime)
+        values (#{peopleId},#{testtubeId},#{collectTime});
     </insert>
 
 
@@ -30,6 +30,10 @@
     </select>
     <select id="getTypeByTubeId" resultType="java.lang.Integer">
         select collectType
+        from testtube where testtubeId=#{testtubeId};
+    </select>
+    <select id="getstatusByTubeId" resultType="java.lang.String">
+        select status
         from testtube where testtubeId=#{testtubeId};
     </select>
 

@@ -30,9 +30,8 @@ public class CollectorController {
      */
 
     @PostMapping("/login.do")
-    ResultModel<Collector> login(HttpServletRequest request,@RequestBody Collector collector) throws BusinessException {
+    ResultModel<Collector> login(@RequestBody Collector collector) throws BusinessException {
         Collector login = collectorService.login(collector.getTel(), collector.getPassword());
-        request.getSession().setAttribute("login",login.getCollectorId());
         return  new ResultModel<>(ResultCodeEnum.SUCCESS, login, "登录成功");
     }
 

@@ -1,5 +1,6 @@
 package com.higher.collectmodule.controller;
 
+import com.higher.collectmodule.dao.BoxDao;
 import com.higher.collectmodule.exception.BusinessException;
 import com.higher.collectmodule.pojo.Box;
 import com.higher.collectmodule.service.BoxService;
@@ -19,6 +20,9 @@ import java.util.List;
 public class BoxController {
     @Autowired
     BoxService boxService;
+
+    @Autowired
+    BoxDao boxDao;
 
     /**
      * 根据pointId查询相应的所有箱子信息
@@ -40,20 +44,17 @@ public class BoxController {
      */
     @PostMapping("addBox.do")
     ResultModel<Box> addBox(@RequestBody Box box) throws BusinessException {
-        if (StringUtils.isEmpty(box.getBoxCode())){
-            throw new BusinessException("请输入正确编码",ResultCodeEnum.ERROR);
+        Box boxCode = boxDao.getBoxCode(box.getBoxCode());
+        if (StringUtils.isEmpty(box.getBoxCode()) || boxCode!=null){
+            return new ResultModel<>(ResultCodeEnum.ERROR,"箱子编码重复或编码输入错误，请重新输入");
+//            throw new BusinessException("请输入正确编码",ResultCodeEnum.ERROR);
         }
         box.setStatus("0");//状态，0：开箱，1：封箱
-//        box.setCollectorId((Integer) request.getSession().getAttribute("login"));
-//        box.setCollectorId(1);//检测人员Id，和前端合并后修改为前端获取
         box.setTransferId(1);//转运人员默认1
         box.setTesterId(1);//检测人员Id，默认值1
-//        box.setPointId((Integer) request.getSession().getAttribute("pointId"));
-//        box.setPointId(1);//检测点Id，和前端合并后修改为前端获取
         box.setTestOrganiationId(1);//检测机构Id，默认值1
         box.setOpenTime(new Date());//开箱时间，获取当前时间
         boxService.addBox(box);
-//        request.getSession().setAttribute("boxId",box.getBoxId());
         return new ResultModel<>(ResultCodeEnum.SUCCESS,box,"开箱成功");
     }
 
@@ -63,8 +64,7 @@ public class BoxController {
      * @return
      */
     @PostMapping("closeBox.do")
-    ResultModel<Box> closeBox(@RequestBody Box box){
-//        box.setBoxId((Integer) request.getSession().getAttribute("boxId"));
+    ResultModel<Box> closeBox(Box box){
         box.setCloseTime(new Date());
         box.setStatus("1");
         boxService.closeBox(box);

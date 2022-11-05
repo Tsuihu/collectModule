@@ -47,6 +47,8 @@ public class PeopleController {
      */
     @PostMapping("addPeople.do")
     ResultModel<People> addPeople(HttpServletRequest request, @RequestBody People people,Sample sample) throws BusinessException {
+
+
         people.setCreateTime(new Date());
         Integer peopleId2 = peopleDao.getpeopleByIdcard(people.getIdcard());
         if (peopleId2 == null){
@@ -56,12 +58,17 @@ public class PeopleController {
         request.getSession().setAttribute("peopleId",peopleId);
         Integer peopleId1 = (Integer) request.getSession().getAttribute("peopleId");
         Integer tubeId = (Integer) request.getSession().getAttribute("testtubeId");
+
+        String getstatus = peopleDao.getstatusByTubeId(tubeId);
+        if (getstatus.equals("1")){
+            return new ResultModel<>(ResultCodeEnum.ERROR,"辞管已封，请另开管添加");
+        }
+
         Integer type = peopleService.getTypeByTubeId(tubeId);
         List<People> peopleList = peopleService.getPeopleByTubeId(tubeId);
         int size = peopleList.size();//10
         if (size<type){
-            sample.setCollectTime(new Date());
-            peopleService.insertSample(peopleId1,tubeId);
+            peopleService.insertSample(peopleId1,tubeId,new Date());
             return  new ResultModel<>(ResultCodeEnum.SUCCESS, people, "添加成功");
         }
         else {

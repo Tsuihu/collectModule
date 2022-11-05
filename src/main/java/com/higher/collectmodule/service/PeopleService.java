@@ -5,6 +5,7 @@ import com.higher.collectmodule.pojo.People;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,8 @@ public interface PeopleService {
     //添加人员信息
     void addPeople(People people) throws BusinessException;
 
-    void insertSample(Integer peopleId, Integer testtubeId);
+    void insertSample(@Param("peopleId") Integer peopleId, @Param("testtubeId") Integer testtubeId ,@Param("collectTime") Date collectTime);
+
 
     Integer getTypeByTubeId(@Param("testtubeId") Integer testtubeId);
 

@@ -1,13 +1,11 @@
 package com.higher.collectmodule.service.impl;
 
 import com.higher.collectmodule.dao.BoxDao;
-import com.higher.collectmodule.exception.BusinessException;
 import com.higher.collectmodule.pojo.Box;
 import com.higher.collectmodule.service.BoxService;
-import com.higher.collectmodule.util.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+
 
 import java.util.List;
 
@@ -33,14 +31,8 @@ public class BoxServiceImpl implements BoxService {
      * @param box boxCode,collectorId,pointId
      */
     @Override
-    public void addBox(Box box) throws BusinessException {
-        Box boxCode = boxDao.getBoxCode(box.getBoxCode());
-        if (StringUtils.isEmpty(boxCode)){
+    public void addBox(Box box){
             boxDao.addBox(box);
-        }
-        else {
-            throw new BusinessException("转运箱编码已存在，请重新输入", ResultCodeEnum.ERROR);
-        }
     }
 
     /**

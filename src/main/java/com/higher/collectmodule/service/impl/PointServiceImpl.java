@@ -26,15 +26,6 @@ public class PointServiceImpl implements PointService {
         return  allPoint;
     }
     /**
-     * 查询地址的id
-     * @return
-     */
-    @Override
-    public Point getIdByName(String pointName) throws BusinessException {
-            Point pointId = pointDao.getIdByName(pointName);
-            return pointId;
-    }
-    /**
      * 模糊查询
      * @return
      */

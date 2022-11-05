@@ -42,13 +42,11 @@ public class TesttubeController {
      * @throws BusinessException
      */
     @PostMapping("/addTube.do")
-    public ResultModel<Testtube> addTube(HttpServletRequest request,@RequestBody Testtube testtube) throws BusinessException {
+    public ResultModel<Testtube> addTube(@RequestBody Testtube testtube) throws BusinessException {
         testtube.setStatus(0);
         testtube.setOpenTime(new Date());
         testtube.setTestResult("0");
         testtubeService.addTube(testtube);
-//        request.getSession().setAttribute("tubeId",testtube.getTesttubeId());
-//        request.getSession().setAttribute("tubeType",testtube.getCollectType());
         return new ResultModel<Testtube>(ResultCodeEnum.SUCCESS, testtube, "");
     }
 
@@ -58,7 +56,7 @@ public class TesttubeController {
      * @return
      */
     @PostMapping("/closeTube.do")
-    public ResultModel<Testtube> closeTube(@RequestBody Testtube testtube){
+    public ResultModel<Testtube> closeTube(Testtube testtube){
         testtube.setStatus(1);
         testtube.setCloseTime(new Date());
         testtubeService.closeTube(testtube.getStatus(),testtube.getCloseTime(),testtube.getTesttubeId());

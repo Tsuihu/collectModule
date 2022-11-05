@@ -6,8 +6,8 @@ import com.higher.collectmodule.pojo.People;
 import com.higher.collectmodule.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
+import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
 
@@ -29,9 +29,9 @@ public class PeopleServiceImpl implements PeopleService {
     }
 
     @Override
-    public void insertSample(Integer peopleId, Integer testtubeId) {
+    public void insertSample(Integer peopleId, Integer testtubeId, Date collectTime) {
 
-        peopleDao.insertSample(peopleId,testtubeId);
+        peopleDao.insertSample(peopleId,testtubeId,collectTime);
     }
 
     @Override
