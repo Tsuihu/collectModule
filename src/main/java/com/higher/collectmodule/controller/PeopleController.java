@@ -33,10 +33,9 @@ public class PeopleController {
      * @return
      */
     @PostMapping("getAllPeople.do")
-    ResultModel<List<People>> getPeopleByTubeId(Integer testtubeId){
+    ResultModel<List<People>> getPeopleByTubeId(HttpServletRequest request,Integer testtubeId){
         List<People> peopleList = peopleService.getPeopleByTubeId(testtubeId);
-//        System.out.println(peopleList.size());
-
+        request.getSession().setAttribute("testtubeId",testtubeId);
         return new ResultModel<>(ResultCodeEnum.SUCCESS,peopleList,"");
     }
 
@@ -47,63 +46,28 @@ public class PeopleController {
      * @throws BusinessException
      */
     @PostMapping("addPeople.do")
-    ResultModel<People> addPeople(HttpServletRequest request, @RequestBody People people) throws BusinessException {
+    ResultModel<People> addPeople(HttpServletRequest request, @RequestBody People people,Sample sample) throws BusinessException {
         people.setCreateTime(new Date());
-        peopleService.addPeople(people);
+        Integer peopleId2 = peopleDao.getpeopleByIdcard(people.getIdcard());
+        if (peopleId2 == null){
+            peopleService.addPeople(people);
+        }
         Integer peopleId = peopleDao.getpeopleByIdcard(people.getIdcard());
-
         request.getSession().setAttribute("peopleId",peopleId);
-
-
-        System.out.println(request.getSession().getAttribute("peopleId"));
-        System.out.println(request.getSession().getAttribute("tubeId"));
-        System.out.println(request.getSession().getAttribute("tubeType"));
-
         Integer peopleId1 = (Integer) request.getSession().getAttribute("peopleId");
-        Integer tubeId = (Integer) request.getSession().getAttribute("tubeId");
-        Integer tubeType = (Integer) request.getSession().getAttribute("tubeType");
-
-
+        Integer tubeId = (Integer) request.getSession().getAttribute("testtubeId");
+        Integer type = peopleService.getTypeByTubeId(tubeId);
         List<People> peopleList = peopleService.getPeopleByTubeId(tubeId);
-        int size = peopleList.size();
-
-        System.out.println(size);
-
-        if (size<tubeType){
-            peopleService.insertSample(peopleId1,tubeId,new Date());
+        int size = peopleList.size();//10
+        if (size<type){
+            sample.setCollectTime(new Date());
+            peopleService.insertSample(peopleId1,tubeId);
             return  new ResultModel<>(ResultCodeEnum.SUCCESS, people, "添加成功");
         }
         else {
             return new ResultModel<>(ResultCodeEnum.ERROR,people,"试管已满，请封管后另开新管检测");
         }
 
-//        Integer peopleId = peopleDao.getpeopleByIdcard(people.getIdcard());
-//
-//
-//        Integer type = peopleService.getTypeByTubeId(1);
-//
-//        List<People> peopleList = peopleService.getPeopleByTubeId(1);
-//        int size = peopleList.size();
-//
-//        if (size<type){
-//            peopleService.insertSample(peopleId, 1,new Date());
-//            return  new ResultModel<>(ResultCodeEnum.SUCCESS, people, "添加成功");
-//        }else {
-//            return new ResultModel<>(ResultCodeEnum.ERROR,"试管已满，请封管后另开新管检测");
-//        }
-
-
-//        Integer type = testtube.getCollectType();
-//        List<People> peopleList = peopleService.getPeopleByTubeId(testtube.getTesttubeId());
-//        int size = peopleList.size();
-//        if (size < type) {
-//            sample.setCollectTime(new Date());
-//            peopleService.insertSample(people.getPeopleId(), testtube.getTesttubeId());
-//            return new ResultModel<>(ResultCodeEnum.SUCCESS, sample, "添加成功");
-//        }
-//        else {
-//            return new ResultModel<>(ResultCodeEnum.ERROR,"试管已满，请封管后另开新管检测");
-//        }
     }
 
 }

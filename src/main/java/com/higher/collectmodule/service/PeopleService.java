@@ -16,8 +16,9 @@ public interface PeopleService {
     //添加人员信息
     void addPeople(People people) throws BusinessException;
 
-    void insertSample(Integer peopleId, Integer testtubeId, Date collectTime);
+    void insertSample(Integer peopleId, Integer testtubeId);
 
     Integer getTypeByTubeId(@Param("testtubeId") Integer testtubeId);
+
 
 }

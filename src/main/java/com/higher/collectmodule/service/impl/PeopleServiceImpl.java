@@ -25,18 +25,13 @@ public class PeopleServiceImpl implements PeopleService {
 
     @Override
     public void addPeople(People people) throws BusinessException {
-        Integer peopleId = peopleDao.getpeopleByIdcard(people.getIdcard());
-//        查不到peopleID，则进行人员的添加
-        if (StringUtils.isEmpty(peopleId)){
             peopleDao.addPeople(people);
-        }
-        //查的到peopleId,则根据查到的peopleId进行sample表的人员和试管的绑定
     }
 
     @Override
-    public void insertSample(Integer peopleId, Integer testtubeId, Date collectTime) {
+    public void insertSample(Integer peopleId, Integer testtubeId) {
 
-        peopleDao.insertSample(peopleId,testtubeId,collectTime);
+        peopleDao.insertSample(peopleId,testtubeId);
     }
 
     @Override
@@ -44,4 +39,5 @@ public class PeopleServiceImpl implements PeopleService {
         Integer type = peopleDao.getTypeByTubeId(testtubeId);
         return type;
     }
+
 }

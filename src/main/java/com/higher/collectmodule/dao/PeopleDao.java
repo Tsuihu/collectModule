@@ -4,7 +4,6 @@ import com.higher.collectmodule.pojo.People;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -20,9 +19,8 @@ public interface PeopleDao {
     //根据身份证查peopleId,判断人员是都存在
     Integer getpeopleByIdcard(@Param("idcard") String idcard);
 
-////    根据testtubeId查询collectType，返回type数值。
+
+    void insertSample(@Param("peopleId") Integer peopleId,@Param("testtubeId") Integer testtubeId);
+
     Integer getTypeByTubeId(@Param("testtubeId") Integer testtubeId);
-
-
-    void insertSample(Integer peopleId, Integer testtubeId, Date collectTime);
 }

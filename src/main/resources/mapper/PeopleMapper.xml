@@ -10,27 +10,27 @@
     </insert>
 
 
-    <insert id="insertSample" useGeneratedKeys="true" keyProperty="sampleId" >
-        insert into sample (peopleId,testtubeId,collectTime)
-        values (#{peopleId},#{testtubeId},#{collectTime});
+    <insert id="insertSample">
+        insert into sample (peopleId,testtubeId)
+        values (#{peopleId},#{testtubeId});
     </insert>
 
 
     <!--    根据试管Id查询对应的peopleId，再根据peopleId查询人员信息-->
     <select id="getPeopleByTubeId" resultType="com.higher.collectmodule.pojo.People">
         select *
-        from people
-        where peopleId in (select peopleId from sample where testtubeId = #{testtubeId});
+        from people p inner join sample s
+        on p.peopleId=s.peopleId
+        where testtubeId=#{testtubeId}
     </select>
 
     <select id="getpeopleByIdcard" resultType="java.lang.Integer">
         select peopleId
         from people where idcard = #{idcard};
     </select>
-
     <select id="getTypeByTubeId" resultType="java.lang.Integer">
         select collectType
-        from testtube where testtubeId =#{testtubeId};
+        from testtube where testtubeId=#{testtubeId};
     </select>
 
 
