@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.higher.collectmodule.dao.PeopleDao">
+
+<!--    添加人员信息-->
+    <insert id="addPeople" useGeneratedKeys="true" keyProperty="peopleId">
+        insert into people (name,idcardType,idcard,tel,createTime)
+        values (#{name},#{idcardType},#{idcard},#{tel},#{createTime});
+    </insert>
+
+
+    <insert id="insertSample" useGeneratedKeys="true" keyProperty="sampleId" >
+        insert into sample (peopleId,testtubeId,collectTime)
+        values (#{peopleId},#{testtubeId},#{collectTime});
+    </insert>
+
+
+    <!--    根据试管Id查询对应的peopleId，再根据peopleId查询人员信息-->
+    <select id="getPeopleByTubeId" resultType="com.higher.collectmodule.pojo.People">
+        select *
+        from people
+        where peopleId in (select peopleId from sample where testtubeId = #{testtubeId});
+    </select>
+
+    <select id="getpeopleByIdcard" resultType="java.lang.Integer">
+        select peopleId
+        from people where idcard = #{idcard};
+    </select>
+
+<!--    <select id="getTypeByTubeId" resultType="java.lang.Integer">-->
+<!--        select collectType-->
+<!--        from testtube where testtubeId =#{testtubeId};-->
+<!--    </select>-->
+
+
+</mapper>
