@@ -61,7 +61,7 @@ public class PeopleController {
 
         String getstatus = peopleDao.getstatusByTubeId(tubeId);
         if (getstatus.equals("1")){
-            return new ResultModel<>(ResultCodeEnum.ERROR,"辞管已封，请另开管添加");
+            return new ResultModel<>(ResultCodeEnum.ERROR,"此管已封，请另开管添加");
         }
 
         Integer type = peopleService.getTypeByTubeId(tubeId);
