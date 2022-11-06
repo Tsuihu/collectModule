@@ -29,9 +29,6 @@ public class TesttubeController {
     @PostMapping("/getAllTube.do")
     public ResultModel<List<Testtube>> getAllTube(HttpServletRequest request,Testtube testtube){
         List<Testtube> testtubes= testtubeService.getAllTube(testtube.getBoxId());
-
-
-
         return new ResultModel<>(ResultCodeEnum.SUCCESS, testtubes, "");
     }
 
@@ -60,6 +57,6 @@ public class TesttubeController {
         testtube.setStatus(1);
         testtube.setCloseTime(new Date());
         testtubeService.closeTube(testtube.getStatus(),testtube.getCloseTime(),testtube.getTesttubeId());
-        return new ResultModel<>(ResultCodeEnum.SUCCESS, testtube, "");
+        return new ResultModel<>(ResultCodeEnum.SUCCESS, testtube, "封管成功");
     }
 }

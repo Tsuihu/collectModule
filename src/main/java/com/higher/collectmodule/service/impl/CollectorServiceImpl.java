@@ -23,7 +23,7 @@ public class CollectorServiceImpl implements CollectorService {
     @Override
     public Collector login(String tel, String password) throws BusinessException{
         Collector login = collectorDao.login(tel);
-
+        System.out.println(login);
         if(login == null){
             throw new BusinessException("手机号不存在", ResultCodeEnum.LOGIN_ERROR);
         }
