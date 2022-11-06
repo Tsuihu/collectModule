@@ -46,24 +46,11 @@ public class PeopleController {
      * @throws BusinessException
      */
     @PostMapping("addPeople.do")
-    ResultModel<People> addPeople(HttpServletRequest request, @RequestBody People people,Sample sample) throws BusinessException {
+    ResultModel<People> addPeople(HttpServletRequest request, @RequestBody People people) throws BusinessException {
 
-
-        people.setCreateTime(new Date());
-        Integer peopleId2 = peopleDao.getpeopleByIdcard(people.getIdcard());
-        if (peopleId2 == null){
-            peopleService.addPeople(people);
-        }
-        Integer peopleId = peopleDao.getpeopleByIdcard(people.getIdcard());
-        request.getSession().setAttribute("peopleId",peopleId);
+        peopleService.addPeople(people);
         Integer peopleId1 = (Integer) request.getSession().getAttribute("peopleId");
         Integer tubeId = (Integer) request.getSession().getAttribute("testtubeId");
-
-        String getstatus = peopleDao.getstatusByTubeId(tubeId);
-        if (getstatus.equals("1")){
-            return new ResultModel<>(ResultCodeEnum.ERROR,"辞管已封，请另开管添加");
-        }
-
         Integer type = peopleService.getTypeByTubeId(tubeId);
         List<People> peopleList = peopleService.getPeopleByTubeId(tubeId);
         int size = peopleList.size();//10
