@@ -54,7 +54,7 @@ public class CollectorController {
      * @param collector
      * @return
      */
-    @PostMapping("/sendMsg")
+    @PostMapping("/sendMsg.do")
     public ResultModel<String> sendMsg(@RequestBody Collector collector, HttpSession session) {
         //获取手机号
         String tel = collector.getTel();
@@ -64,7 +64,7 @@ public class CollectorController {
             String code = ValidateCodeUtils.generateValidateCode(4).toString();
 
             //调用阿里云提供的短信服务API完成发送短信
-//            SMSUtils.sendMessage("阿里云短信测试", "SMS_154950909", tel, code);
+            //SMSUtils.sendMessage("阿里云短信测试", "SMS_154950909", tel, code);
             //需要将生成验证码保存到session
             log.info("code:{}",code);
             session.setAttribute("tel", tel);
@@ -92,6 +92,8 @@ public class CollectorController {
         //获取验证码
         String code = collectorMsg.getCode();
 
+        System.out.println(code);
+
         //从session中获取保存的验证码
         Object codeInSession = session.getAttribute("code");
 
@@ -113,7 +115,7 @@ public class CollectorController {
         }
 
 
-        return new ResultModel<>(ResultCodeEnum.ERROR,"注册失败，请检查手机号或验证码是否正确");
+        throw new BusinessException("注册失败，请检查手机号或验证码是否正确",ResultCodeEnum.ERROR);
     }
 
 }
