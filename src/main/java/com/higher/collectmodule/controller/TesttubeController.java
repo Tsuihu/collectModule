@@ -27,7 +27,7 @@ public class TesttubeController {
      * @return
      */
     @PostMapping("/getAllTube.do")
-    public ResultModel<List<Testtube>> getAllTube(HttpServletRequest request,Testtube testtube){
+    public ResultModel<List<Testtube>> getAllTube(Testtube testtube){
         List<Testtube> testtubes= testtubeService.getAllTube(testtube.getBoxId());
         return new ResultModel<>(ResultCodeEnum.SUCCESS, testtubes, "");
     }

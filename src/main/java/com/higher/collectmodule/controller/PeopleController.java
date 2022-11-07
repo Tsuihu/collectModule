@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("people")
+@RequestMapping("/people")
 public class PeopleController {
     @Autowired
     PeopleService peopleService;
@@ -27,15 +28,18 @@ public class PeopleController {
     @Autowired
     PeopleDao peopleDao;
 
+    @Autowired
+    HttpSession session;
+
     /**
      * 根据试管Id查询所有peopleId，再根据peopleID查询对应的人员信息
      * @param testtubeId 前端保存testtubeId，后端调用
      * @return
      */
     @PostMapping("getAllPeople.do")
-    ResultModel<List<People>> getPeopleByTubeId(HttpServletRequest request,Integer testtubeId){
+    ResultModel<List<People>> getPeopleByTubeId(Integer testtubeId){
         List<People> peopleList = peopleService.getPeopleByTubeId(testtubeId);
-        request.getSession().setAttribute("testtubeId",testtubeId);
+        session.setAttribute("testtubeId",testtubeId);
         return new ResultModel<>(ResultCodeEnum.SUCCESS,peopleList,"");
     }
 
@@ -46,16 +50,18 @@ public class PeopleController {
      * @throws BusinessException
      */
     @PostMapping("addPeople.do")
-    ResultModel<People> addPeople(HttpServletRequest request, @RequestBody People people) throws BusinessException {
+    ResultModel<People> addPeople(@RequestBody People people) throws BusinessException {
 
         peopleService.addPeople(people);
-        Integer peopleId1 = (Integer) request.getSession().getAttribute("peopleId");
-        Integer tubeId = (Integer) request.getSession().getAttribute("testtubeId");
+
+        Integer peopleId = (Integer) session.getAttribute("peopleId");
+        Integer tubeId = (Integer) session.getAttribute("testtubeId");
+
         Integer type = peopleService.getTypeByTubeId(tubeId);
         List<People> peopleList = peopleService.getPeopleByTubeId(tubeId);
         int size = peopleList.size();//10
         if (size<type){
-            peopleService.insertSample(peopleId1,tubeId,new Date());
+            peopleService.insertSample(peopleId,tubeId,new Date());
             return  new ResultModel<>(ResultCodeEnum.SUCCESS, people, "添加成功");
         }
         else {

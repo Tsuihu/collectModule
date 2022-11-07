@@ -3,6 +3,7 @@ package com.higher.collectmodule.service.impl;
 import com.higher.collectmodule.dao.CollectorDao;
 import com.higher.collectmodule.exception.BusinessException;
 import com.higher.collectmodule.pojo.Collector;
+import com.higher.collectmodule.pojo.bo.CollectorMsg;
 import com.higher.collectmodule.service.CollectorService;
 import com.higher.collectmodule.util.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,16 +36,16 @@ public class CollectorServiceImpl implements CollectorService {
 
     /**
      * 注册
-     * @param collector
+     * @param collectorMsg
      * @throws BusinessException
      */
     @Override
-    public void addManager(Collector collector) throws BusinessException {
-        if (collectorDao.checkCollectorRepeat(collector.getTel())>0){
+    public void addManager(CollectorMsg collectorMsg) throws BusinessException {
+        if (collectorDao.checkCollectorRepeat(collectorMsg.getTel())>0){
             throw new BusinessException("手机号已存在",ResultCodeEnum.ERROR);
         }
         else {
-            collectorDao.addManager(collector);
+            collectorDao.addManager(collectorMsg);
         }
     }
 }
