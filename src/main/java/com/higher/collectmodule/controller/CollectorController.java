@@ -6,10 +6,7 @@ import com.higher.collectmodule.pojo.Collector;
 import com.higher.collectmodule.pojo.Point;
 import com.higher.collectmodule.pojo.bo.CollectorMsg;
 import com.higher.collectmodule.service.CollectorService;
-import com.higher.collectmodule.util.ResultCodeEnum;
-import com.higher.collectmodule.util.ResultModel;
-import com.higher.collectmodule.util.SMSUtils;
-import com.higher.collectmodule.util.ValidateCodeUtils;
+import com.higher.collectmodule.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
@@ -43,7 +40,11 @@ public class CollectorController {
 
     @PostMapping("/login.do")
     ResultModel<Collector> login(@RequestBody Collector collector) throws BusinessException {
-        Collector login = collectorService.login(collector.getTel(), collector.getPassword());
+        //密码进行MD5加密后查询登录
+        String passwordMd5 = MD5.encrypt(collector.getPassword());
+        System.out.println(passwordMd5);
+
+        Collector login = collectorService.login(collector.getTel(),passwordMd5);
         return  new ResultModel<>(ResultCodeEnum.SUCCESS, login, "登录成功");
     }
 
@@ -64,7 +65,7 @@ public class CollectorController {
             String code = ValidateCodeUtils.generateValidateCode(4).toString();
 
             //调用阿里云提供的短信服务API完成发送短信
-            //SMSUtils.sendMessage("阿里云短信测试", "SMS_154950909", tel, code);
+//            SMSUtils.sendMessage("阿里云短信测试", "SMS_154950909", tel, code);
             //需要将生成验证码保存到session
             log.info("code:{}",code);
             session.setAttribute("tel", tel);
@@ -107,6 +108,11 @@ public class CollectorController {
                 collectorDao.login(tel);
             }
             else {
+                //密码进行MD5加密
+                String password = collectorMsg.getPassword();
+                String signKeyMd5 = MD5.encrypt(password);
+                collectorMsg.setPassword(signKeyMd5);
+
                 collectorMsg.setRegistTime(new Date());
                 collectorMsg.setOrganizationId(1000);
                 collectorService.addManager(collectorMsg);
