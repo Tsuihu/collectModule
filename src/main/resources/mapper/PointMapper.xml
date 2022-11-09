@@ -15,7 +15,6 @@
         where pointName=#{pointName};
     </select>
 
-
 <!--    通过地点名字进行模糊查询-->
     <select id="getLikeName" resultType="com.higher.collectmodule.pojo.Point">
         select pointId,pointName

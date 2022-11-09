@@ -46,8 +46,8 @@ public class BoxController {
     ResultModel<Box> addBox(@RequestBody Box box) throws BusinessException {
         Box boxCode = boxDao.getBoxCode(box.getBoxCode());
         if (StringUtils.isEmpty(box.getBoxCode()) || boxCode!=null){
-            return new ResultModel<>(ResultCodeEnum.ERROR,"箱子编码重复或编码输入错误，请重新输入");
-//            throw new BusinessException("请输入正确编码",ResultCodeEnum.ERROR);
+//            return new ResultModel<>(ResultCodeEnum.ERROR,"箱子编码重复或编码输入错误，请重新输入");
+            throw new BusinessException("箱子编码重复或编码输入错误，请重新输入",ResultCodeEnum.ERROR);
         }
         box.setStatus("0");//状态，0：开箱，1：封箱
         box.setTransferId(1);//转运人员默认1
