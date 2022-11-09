@@ -105,7 +105,8 @@ public class CollectorController {
             //判断当前手机号对应的用户是否为新用户，如果是新用户就自动完成注册
             int i = collectorDao.checkCollectorRepeat(tel);
             if (i>0){
-                collectorDao.login(tel);
+                throw new BusinessException("手机号已存在，请重新输入",ResultCodeEnum.ERROR);
+//                collectorDao.login(tel);
             }
             else {
                 //密码进行MD5加密
