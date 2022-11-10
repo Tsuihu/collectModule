@@ -39,6 +39,7 @@ public class PointController {
      */
     @PostMapping("/getLikeName.do")
     ResultModel<List<Point>> getLikeName(@RequestBody Point point) throws BusinessException {
+
         List<Point> name= pointService.getLikeName(point.getPointName());
         return new ResultModel<>(ResultCodeEnum.SUCCESS,name,"");
     }
