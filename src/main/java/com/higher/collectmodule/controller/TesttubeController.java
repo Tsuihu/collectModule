@@ -44,7 +44,7 @@ public class TesttubeController {
         testtube.setOpenTime(new Date());
         testtube.setTestResult("0");
         testtubeService.addTube(testtube);
-        return new ResultModel<Testtube>(ResultCodeEnum.SUCCESS, testtube, "");
+        return new ResultModel<Testtube>(ResultCodeEnum.SUCCESS, testtube, "开管成功");
     }
 
     /**
