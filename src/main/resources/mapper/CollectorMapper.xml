@@ -16,4 +16,8 @@
     <select id="checkCollectorRepeat" resultType="java.lang.Integer">
         select count(0) from collector where tel = #{tel}
     </select>
+    <select id="checkCollectorIdCard" resultType="java.lang.Integer">
+        select count(0) from collector where idcard = #{idcard}
+
+    </select>
 </mapper>

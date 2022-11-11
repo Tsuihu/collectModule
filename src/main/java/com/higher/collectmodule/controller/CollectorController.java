@@ -56,9 +56,19 @@ public class CollectorController {
      * @return
      */
     @PostMapping("/sendMsg.do")
-    public ResultModel<String> sendMsg(@RequestBody Collector collector, HttpSession session) {
+    public ResultModel<String> sendMsg(@RequestBody Collector collector, HttpSession session) throws BusinessException {
+        String idcard = collector.getIdcard();
+        if (idcard.length()!=18){
+            throw new BusinessException("身份证长度不正确，请重新输入",ResultCodeEnum.ERROR);
+        }
         //获取手机号
         String tel = collector.getTel();
+
+        //判断当前手机号对应的用户是否为新用户，如果是新用户就自动完成注册
+        int i = collectorDao.checkCollectorRepeat(tel);
+        if (i>0){
+            throw new BusinessException("手机号已存在，请重新输入",ResultCodeEnum.ERROR);
+        }
 
         if (tel!=null) {
             //生成随机的4位验证码
@@ -86,6 +96,10 @@ public class CollectorController {
      */
     @PostMapping("registe.do")
     ResultModel<Collector> registe(@RequestBody CollectorMsg collectorMsg,HttpSession session) throws BusinessException {
+
+        String idcard = collectorMsg.getIdcard();
+        System.out.println(idcard.length());
+
         log.info(collectorMsg.toString());
         //获取手机号
         String tel = collectorMsg.getTel();
@@ -102,13 +116,6 @@ public class CollectorController {
         if (codeInSession !=null && codeInSession.equals(code)){
             //如果比对成功，说明登录成功
 
-            //判断当前手机号对应的用户是否为新用户，如果是新用户就自动完成注册
-            int i = collectorDao.checkCollectorRepeat(tel);
-            if (i>0){
-                throw new BusinessException("手机号已存在，请重新输入",ResultCodeEnum.ERROR);
-//                collectorDao.login(tel);
-            }
-            else {
                 //密码进行MD5加密
                 String password = collectorMsg.getPassword();
                 String signKeyMd5 = MD5.encrypt(password);
@@ -122,7 +129,5 @@ public class CollectorController {
         }
 
 
-        throw new BusinessException("注册失败，请检查手机号或验证码是否正确",ResultCodeEnum.ERROR);
-    }
 
 }

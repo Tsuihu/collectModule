@@ -41,11 +41,15 @@ public class CollectorServiceImpl implements CollectorService {
      */
     @Override
     public void addManager(CollectorMsg collectorMsg) throws BusinessException {
-        if (collectorDao.checkCollectorRepeat(collectorMsg.getTel())>0){
-            throw new BusinessException("手机号已存在",ResultCodeEnum.ERROR);
-        }
-        else {
-            collectorDao.addManager(collectorMsg);
+
+        if(collectorDao.checkCollectorIdCard(collectorMsg.getIdcard()) > 0) {
+            throw new BusinessException("身份证已存在",ResultCodeEnum.ERROR);
+        }else {
+            if (collectorDao.checkCollectorRepeat(collectorMsg.getTel()) > 0) {
+                throw new BusinessException("手机号已存在", ResultCodeEnum.ERROR);
+            } else {
+                collectorDao.addManager(collectorMsg);
+            }
         }
     }
 }

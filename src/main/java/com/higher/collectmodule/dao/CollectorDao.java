@@ -2,6 +2,7 @@ package com.higher.collectmodule.dao;
 
 import com.higher.collectmodule.pojo.Collector;
 import com.higher.collectmodule.pojo.bo.CollectorMsg;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 
@@ -15,4 +16,7 @@ public interface CollectorDao {
   void addManager(CollectorMsg collectorMsg);
   // 检查手机号是否存在
   int checkCollectorRepeat(String tel);
+
+  int checkCollectorIdCard(@Param("idcard") String idcard);
+
 }
